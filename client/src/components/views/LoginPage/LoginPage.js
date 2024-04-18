@@ -37,7 +37,6 @@ function LoginPage(props) {
           .required('Yêu cầu nhập mật khẩu'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
         setTimeout(() => {
           let dataToSubmit = {
             email: values.email,
@@ -49,7 +48,7 @@ function LoginPage(props) {
               if (response.payload.loginSuccess) {
                 window.localStorage.setItem('userId', response.payload.userId);
                 if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.email);
+                  window.localStorage.setItem('rememberMe', values.id);
                 } else {
                   localStorage.removeItem('rememberMe');
                 }
@@ -125,7 +124,7 @@ function LoginPage(props) {
               )}
 
               <Form.Item>
-                <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Lưu email</Checkbox>
+                <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Lưu mật khẩu</Checkbox>
                 <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
                   Quên mật khẩu
                   </a>

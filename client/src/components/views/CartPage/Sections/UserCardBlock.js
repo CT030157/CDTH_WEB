@@ -1,6 +1,5 @@
 import { InputNumber } from 'antd';
 import React, { useEffect, useState } from 'react'
-var host = window.location.protocol + "//" + window.location.hostname;
 
 
 function UserCardBlock(props) {
@@ -8,7 +7,7 @@ function UserCardBlock(props) {
     const renderCartImage = (images) => {
         if(images.length > 0) {
             let image = images[0]
-            return `${host}:4444/${image}`
+            return `http://localhost:4444/${image}`
         }
     }
 
