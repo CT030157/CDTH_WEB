@@ -1,0 +1,37 @@
+{
+    "name": "project-marker-onl",
+    "version": "1.0.0",
+    "main": "index.js",
+    "engine": {
+        "node": "10.16.0",
+        "npm": "6.9.0"
+    },
+    "scripts": {
+        "start": "node server/index.js",
+        "backend": "nodemon server/index.js",
+        "frontend": "npm run front --prefix client",
+        "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    },
+    "author": "Tu",
+    "dependencies": {
+        "async": "^3.2.3",
+        "bcrypt": "^5.0.1",
+        "body-parser": "^1.19.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "express": "^4.17.2",
+        "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.1",
+        "mongoose": "^5.4.20",
+        "multer": "^1.4.4",
+        "multer-gridfs-storage": "^5.0.2",
+        "react-redux": "^7.2.6",
+        "react-router": "^5.2.0",
+        "react-router-dom": "^5.2.0",
+        "socket.io": "^4.4.1"
+    },
+    "devDependencies": {
+        "concurrently": "^7.0.0",
+        "nodemon": "^2.0.15"
+    }
+}
