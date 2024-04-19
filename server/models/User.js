@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
+const config = require('../config/dev');
+const dbUser = mongoose.createConnection(config.mongoUserURI)
 
 const userSchema = mongoose.Schema({
     name: {
@@ -47,7 +49,6 @@ userSchema.pre('save', function (next) {
     var user = this;
 
     if (user.isModified('password')) {
-        console.log('password changed')
         bcrypt.genSalt(saltRounds, function (err, salt) {
             if (err) return next(err);
 
@@ -93,6 +94,6 @@ userSchema.statics.findByToken = function (token, cb) {
     })
 }
 
-const User = mongoose.model('User', userSchema);
+const User = dbUser.model('users', userSchema);
 
 module.exports = { User }

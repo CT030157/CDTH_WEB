@@ -1,5 +1,6 @@
 import React,{ useState , useEffect} from 'react'
-import Axios from 'axios'
+import Axios from 'axios';
+import { PRODUCT_SERVER } from '../../Config';
 function SoldHistoryPage(props) {
     const [Products, setProducts] = useState([])
     const [Skip, setSkip] = useState(0)
@@ -8,7 +9,7 @@ function SoldHistoryPage(props) {
 
 
     const getProducts = (variables) => {
-        Axios.post('/api/product/getWriter', variables)
+        Axios.post(`${PRODUCT_SERVER}/getWriter`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {

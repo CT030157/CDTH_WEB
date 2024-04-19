@@ -13,6 +13,7 @@ function RightMenu(props) {
   const logoutHandler = () => {
     axios.get(`${USER_SERVER}/logout`).then(response => {
       if (response.status === 200) {
+        localStorage.removeItem('userId');
         props.history.push("/login");
       } else {
         alert('Lỗi đăng xuất')

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Dropzone from 'react-dropzone';
 import  Icon  from '@ant-design/icons';
 import Axios from 'axios';
+import { PRODUCT_SERVER } from '../../../Config';
 function FileUpload(props) {
 
     const [Images, setImages] = useState(props.images)
@@ -13,7 +14,7 @@ function FileUpload(props) {
             header: { 'content-type': 'multipart/form-data' }
         }
         formData.append("file", files[0])
-        Axios.post('/api/product/uploadImage', formData, config)
+        Axios.post(`${PRODUCT_SERVER}/uploadImage`, formData, config)
             .then(response => {
                 if (response.data.success) {
 
@@ -51,8 +52,8 @@ function FileUpload(props) {
                     }}
                         {...getRootProps()}
                     >
-                        {console.log('getRootProps', { ...getRootProps() })}
-                        {console.log('getInputProps', { ...getInputProps() })}
+                        {/* {console.log('getRootProps', { ...getRootProps() })}
+                        {console.log('getInputProps', { ...getInputProps() })} */}
                         <input {...getInputProps()} />
                         <Icon type="plus" style={{ fontSize: '3rem' }} />
 
@@ -64,7 +65,7 @@ function FileUpload(props) {
 
                 {Images.map((image, index) => (
                     <div onClick={() => onDelete(image)}>
-                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://localhost:4444/${image}`} alt={`productImg-${index}`} />
+                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://localhost:4445/${image}`} alt={`productImg-${index}`} />
                     </div>
                 ))}
 
