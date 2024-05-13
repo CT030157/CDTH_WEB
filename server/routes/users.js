@@ -254,5 +254,9 @@ router.get('/getHistory', auth, (req, res) => {
     )
 })
 
+router.get("/users_check", (req, res) => {
+    return res.status(200).send('users dmm');
+});
+
 
 module.exports = router;
