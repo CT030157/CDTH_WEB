@@ -9,7 +9,7 @@ function SoldHistoryPage(props) {
 
 
     const getProducts = (variables) => {
-        Axios.post(`${PRODUCT_SERVER}/getWriter`, variables)
+        Axios.get(`${PRODUCT_SERVER}/getWriter`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {

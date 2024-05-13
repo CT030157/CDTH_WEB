@@ -29,7 +29,7 @@ appProduct.use(cookieParser());
 
 
 appUser.use('/api/users', require('./routes/users'));
-appProduct.use('/api/product', require('./routes/product'));
+appProduct.use('/api/products', require('./routes/products'));
 
 
 
