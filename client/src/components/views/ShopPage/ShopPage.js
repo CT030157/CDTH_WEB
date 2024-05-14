@@ -7,6 +7,7 @@ import {  Col, Card , Row, Button } from 'antd';
 import {  EditOutlined , DeleteOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import Edit from './Sections/Edit';
+import { PRODUCT_SERVER } from '../../Config';
 
 const { Meta } = Card;
 
@@ -26,7 +27,7 @@ function ShopPage(props){
 
 
     const getProducts = (variables) => {
-        Axios.post('/api/product/getWriter', variables)
+        Axios.get(`${PRODUCT_SERVER}/getWriter`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {
@@ -60,7 +61,7 @@ function ShopPage(props){
                 _id : product._id,
             }
     
-            Axios.post('/api/product/delete', variables)
+            Axios.post(`${PRODUCT_SERVER}/delete`, variables)
                 .then(response => {
                     if (response.data.success) {
                         alert('Xóa hàng thành công')

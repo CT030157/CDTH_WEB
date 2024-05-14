@@ -80,7 +80,7 @@ router.post("/delete", auth, (req, res) => {
 });
 
 
-router.post("/getProducts", (req, res) => {
+router.get("/getProducts", (req, res) => {
 
     let order = req.body.order ? req.body.order : "desc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id"; 
@@ -110,7 +110,6 @@ router.post("/getProducts", (req, res) => {
             Product.find(findArgs)
                 .find({ $text: { $search: term } })
                 .find({ "writer": { $nin : writer} })
-                .populate("writer")
                 .sort([[sortBy, order]])
                 .skip(skip)
                 .limit(limit)
@@ -121,7 +120,6 @@ router.post("/getProducts", (req, res) => {
         } else {
             Product.find(findArgs)
                 .find({ "writer": { $nin : writer} })
-                .populate("writer")
                 .sort([[sortBy, order]])
                 .skip(skip)
                 .limit(limit)
@@ -134,7 +132,6 @@ router.post("/getProducts", (req, res) => {
         if (term) {
             Product.find(findArgs)
                 .find({ $text: { $search: term } })
-                .populate("writer")
                 .sort([[sortBy, order]])
                 .skip(skip)
                 .limit(limit)
@@ -144,7 +141,6 @@ router.post("/getProducts", (req, res) => {
                 })
         } else {
             Product.find(findArgs)
-                .populate("writer")
                 .sort([[sortBy, order]])
                 .skip(skip)
                 .limit(limit)
@@ -157,7 +153,7 @@ router.post("/getProducts", (req, res) => {
 
 });
 
-router.post("/getWriter", (req, res) => {
+router.get("/getWriter", (req, res) => {
     let order = req.body.order ? req.body.order : "desc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id"; 
     let limit = req.body.limit ? parseInt(req.body.limit) : 100;
@@ -198,11 +194,11 @@ router.get("/products_by_id", (req, res) => {
     )
     .exec((err, product) => {
             if (err) return res.status(400).send(err)
-            return res.status(200).send(product)
+            // return res.status(200).send(product)
         })
  
     Product.find({ '_id': { $in: productIds } })
-        .populate('writer')
+        // .populate('writer')
         .exec((err, product) => {
             if (err) return res.status(400).send(err)
             return res.status(200).send(product)

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.set('useFindAndModify', false);
+const config = require('../config/dev');
+const dbProduct = mongoose.createConnection(config.mongoProductURI)
 
 const productSchema = mongoose.Schema({
     writer: {
@@ -50,6 +52,6 @@ productSchema.index({
 })
 
 
-const Product = mongoose.model('Product', productSchema);
+const Product = dbProduct.model('products', productSchema);
 
 module.exports = { Product }

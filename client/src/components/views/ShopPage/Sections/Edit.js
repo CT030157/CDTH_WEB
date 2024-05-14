@@ -2,6 +2,7 @@ import React, { useState , useEffect} from 'react'
 import { Typography, Button, Form, Input } from 'antd';
 import FileUpload from './FileUpload'
 import Axios from 'axios';
+import { PRODUCT_SERVER } from '../../../Config';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -64,7 +65,7 @@ function Edit(props) {
             category: CategoryValue,
         }
 
-        Axios.post('/api/product/edit', variables)
+        Axios.post(`${PRODUCT_SERVER}/edit`, variables)
             .then(response => {
                 if (response.data.success) {
                     alert('Sửa hàng thành công')

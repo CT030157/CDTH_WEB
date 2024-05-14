@@ -7,6 +7,7 @@ import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
 import { category , price } from './Sections/Datas';
 import SearchFeature from './Sections/SearchFeature';
+import { PRODUCT_SERVER } from '../../Config';
 
 const { Meta } = Card;
 
@@ -36,7 +37,7 @@ function LandingPage() {
     }, [])
 
     const getProducts = (variables) => {
-        Axios.post('/api/product/getProducts', variables)
+        Axios.get(`${PRODUCT_SERVER}/getProducts`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {
