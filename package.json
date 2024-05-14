@@ -7,10 +7,13 @@
         "npm": "6.9.0"
     },
     "scripts": {
+        "installclient": "cd ./client && yarn",
+        "installserver": "yarn && concurrently \"npm:installclient\"",
         "start": "node server/index.js",
         "backend": "nodemon server/index.js",
         "frontend": "npm run front --prefix client",
-        "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+        "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
+        "build": "cd ./client && yarn run build"
     },
     "author": "Tu",
     "dependencies": {
