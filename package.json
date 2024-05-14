@@ -12,8 +12,7 @@
         "start": "node server/index.js",
         "backend": "nodemon server/index.js",
         "frontend": "npm run front --prefix client",
-        "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
-        "build": "npm run build --prefix client"
+        "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
     },
     "author": "Tu",
     "dependencies": {
