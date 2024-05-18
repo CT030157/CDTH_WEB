@@ -1,0 +1,12 @@
+{
+    "rewrites":  [
+        {
+            "source": "/api/users/:path*",
+            "destination": "https://cdth-web.vercel.app/api/users/:path*"
+        },
+        {
+            "source": "/api/products/:path*",
+            "destination": "https://cdth-web.vercel.app/api/products/:path*"
+        }
+    ]
+}
