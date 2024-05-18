@@ -24,6 +24,10 @@
       "dest": "server/products.js"
     },
     {
+      "src": "/uploads/(.*)",
+      "dest": "server/products.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "client/$1"
     }
