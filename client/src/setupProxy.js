@@ -4,21 +4,21 @@ module.exports = function (app) {
     app.use(
         '/api/users',
         createProxyMiddleware({
-            target: 'http://localhost:4444',
+            target: 'https://cdth-web.vercel.app',
             changeOrigin: true,
         })
     );
     app.use(
         '/api/products',
         createProxyMiddleware({
-            target: 'http://localhost:4445',
+            target: 'https://cdth-web.vercel.app',
             changeOrigin: true,
         })
     );
     app.use(
         '/uploads',
         createProxyMiddleware({
-            target: 'http://localhost:4445',
+            target: 'https://cdth-web.vercel.app',
             changeOrigin: true,
         })
     );
