@@ -37,7 +37,7 @@ function LandingPage() {
     }, [])
 
     const getProducts = (variables) => {
-        Axios.get(`https://cdth-web-frontend.vercel.app/api/products/getProducts`, variables)
+        Axios.get(`https://cdth-web.vercel.app/api/products/getProducts`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {
