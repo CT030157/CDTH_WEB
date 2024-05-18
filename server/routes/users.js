@@ -80,8 +80,6 @@ router.get('/addToCart', auth, (req, res) => {
     User.findOne({ _id: req.user._id }, (err, userInfo) => {
         let duplicate = false;
 
-        console.log(userInfo)
-
         userInfo.cart.forEach((item) => {
             if (item.id == req.query.productId) {
                 duplicate = true;
