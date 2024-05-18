@@ -33,7 +33,7 @@ export function loginUser(dataToSubmit) {
 
 
 export function auth() {
-    const request = axios.get(`${USER_SERVER}/auth`)
+    const request = axios.get(`${USER_SERVER}/auth`, { withCredentials: true })
         .then(response => response.data);
 
     return {
