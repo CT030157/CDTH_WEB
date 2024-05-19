@@ -6,38 +6,46 @@ const multer = require('multer');
 const { auth } = require("../middleware/auth");
 const { isValidObjectId } = require('mongoose');
 
+const { initializeApp } = require('firebase/app');
+const { getStorage, ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage');
+const config = require('../config/dev');
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}_${file.originalname}`)
-    },
-    fileFilter: (req, file, cb) => {
-        const ext = path.extname(file.originalname)
-        if (ext !== '.jpg' || ext !== '.png') {
-            return cb(res.status(400).end('only jpg, png are allowed'), false);
-        }
-        cb(null, true)
-    }
-})
+initializeApp(config.firebaseConfig);
 
-var upload = multer({ storage: storage }).single("file")
+const storage = getStorage();
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+
 
 
 //=================================
 //             Product
 //=================================
 
-router.post("/uploadImage", auth, (req, res) => {
+router.post("/uploadImage", auth, upload.single("file"), async (req, res) => {
 
-    upload(req, res, err => {
-        if (err) {
-            return res.json({ success: false, err })
-        }
-        return res.json({ success: true, image: res.req.file.path, fileName: res.req.file.filename })
-    })
+
+    try {
+        const storageRef = ref(storage, `images/${Date.now() + '_' + req.file.originalname}`);
+
+        const metadata = {
+            contentType: req.file.mimetype,
+        };
+
+        const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        return res.send({
+            message: 'file uploaded to firebase storage',
+            fileName: Date.now() + '_' + req.file.originalname,
+            image: downloadURL,
+            success: true
+        })
+    } catch (error) {
+        return res.status(400).send(error.message)
+    }
 
 });
 

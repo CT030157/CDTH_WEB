@@ -19,9 +19,6 @@ appProduct.use('/api/products', require('./routes/products'));
 
 
 
-appProduct.use('/uploads', express.static('uploads'));
-
-
 const portProduct = 4445
 
 appProduct.listen(portProduct, () => {
