@@ -23,11 +23,15 @@ function ProductInfo(props) {
         history.push(path);
     }
 
+    const addDotToNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
 
     return (
         <div>
             <Descriptions title="Thông tin sản phẩm">
-                <Descriptions.Item label="Giá tiền"> {Product.price}.000VNĐ</Descriptions.Item>
+                <Descriptions.Item label="Giá tiền"> {addDotToNumber(Product.price)}.000VNĐ</Descriptions.Item>
                 <Descriptions.Item label="Đã mua">{Product.sold}</Descriptions.Item>
                 <Descriptions.Item label="Đã xem"> {Product.views}</Descriptions.Item>
                 <Descriptions.Item label="Mô tả"> {Product.description}</Descriptions.Item>

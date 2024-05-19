@@ -83,6 +83,10 @@ function CartPage(props) {
         console.log('Transaction canceled')
     }
 
+    const addDotToNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
@@ -97,7 +101,7 @@ function CartPage(props) {
 
                 {ShowTotal ?
                     <div style={{ marginTop: '3rem' }}>
-                        <h2>Thanh toán: {Total}.000VNĐ = {TotalUSD}USD </h2>
+                        <h2>Thanh toán: {addDotToNumber(Total)}.000VNĐ = {TotalUSD}USD </h2>
                     </div>
                     :
                     ShowSuccess ?

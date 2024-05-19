@@ -33,12 +33,16 @@ function SoldHistoryPage(props) {
         }
         getProducts(variables)
     }, [])
+
+    const addDotToNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
     
     const renderCards = Products.map((product, index) => {
         return(
             <tr key={product._id}>
                 <td>{product.title}</td> 
-                <td>{product.price}.000VNĐ </td>
+                <td>{addDotToNumber(product.price)}.000VNĐ </td>
                 <td>{product.sold}</td>
                 <td>{product.sold*product.price}.000VNĐ</td>
             </tr>   

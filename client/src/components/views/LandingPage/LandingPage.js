@@ -37,7 +37,7 @@ function LandingPage() {
     }, [])
 
     const getProducts = (variables) => {
-        Axios.get(`${PRODUCT_SERVER}/getProducts`, variables)
+        Axios.post(`${PRODUCT_SERVER}/getProducts`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {
@@ -66,6 +66,10 @@ function LandingPage() {
         setSkip(skip)
     }
 
+    const addDotToNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
 
     const renderCards = Products.map((product, index) => {
 
@@ -78,7 +82,7 @@ function LandingPage() {
                 <Meta
                     key={index}
                     title={product.title}
-                    description={`${product.price}.000VND`}
+                    description={`${addDotToNumber(product.price)}.000VND`}
                 />
             </Card>
         </Col>

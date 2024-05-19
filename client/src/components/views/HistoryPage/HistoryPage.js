@@ -1,6 +1,10 @@
 import React from 'react'
 
 function HistoryPage(props) {
+
+    const addDotToNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
     
     return (
         <div style={{ width: '80%', margin: '3rem auto' }}>
@@ -27,7 +31,7 @@ function HistoryPage(props) {
                             <tr>
                                 <td>{item.id}</td>
                                 <td>{item.name}</td>
-                                <td>{item.price}.000VNĐ</td>
+                                <td>{addDotToNumber(item.price)}.000VNĐ</td>
                                 <td>{item.quantity}</td>
                                 <td>{Date(item.dateOfPurchase)}</td>
                             </tr>

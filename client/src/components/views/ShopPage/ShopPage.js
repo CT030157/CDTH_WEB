@@ -27,7 +27,7 @@ function ShopPage(props){
 
 
     const getProducts = (variables) => {
-        Axios.get(`${PRODUCT_SERVER}/getWriter`, variables)
+        Axios.post(`${PRODUCT_SERVER}/getWriter`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {
@@ -86,6 +86,11 @@ function ShopPage(props){
                     }
             setDeTail(variables)
         }
+
+        const addDotToNumber = (num) => {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
         return <Col lg={6} md={8} xs={24}>
             <Card
                 hoverable={true}
@@ -103,7 +108,7 @@ function ShopPage(props){
             >
                 <Meta
                     title={product.title}
-                    description={`${product.price}.000VND`}
+                    description={`${addDotToNumber(product.price)}.000VND`}
                 />
             </Card>
         </Col>

@@ -19,13 +19,17 @@ function UserCardBlock(props) {
                     src={renderCartImage(product.images)} />
                 </td> 
                 <td>{product.quantity}</td>
-                <td>{product.price}.000VNĐ </td>
+                <td>{addDotToNumber(product.price)}.000VNĐ </td>
                 <td><button 
                 onClick={()=> props.removeItem(product._id)}
                 >Loại bỏ </button> </td>
             </tr>
         ))
-    )
+    );
+
+    const addDotToNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 
 
     return (

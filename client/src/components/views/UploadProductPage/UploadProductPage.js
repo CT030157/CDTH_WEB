@@ -103,7 +103,7 @@ function UploadProductPage(props) {
                 />
                 <br />
                 <br />
-                <label>Giá tiền(VNĐ)</label>
+                <label>Giá tiền(nghìn VNĐ)</label>
                 <Input
                     onChange={onPriceChange}
                     value={PriceValue}
