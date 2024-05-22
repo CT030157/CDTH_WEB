@@ -82,7 +82,7 @@ function LandingPage() {
                 <Meta
                     key={index}
                     title={product.title}
-                    description={`${addDotToNumber(product.price)}.000VND`}
+                    description={`${addDotToNumber(product.price ?? 0)}.000VND`}
                 />
             </Card>
         </Col>

@@ -101,7 +101,7 @@ function CartPage(props) {
 
                 {ShowTotal ?
                     <div style={{ marginTop: '3rem' }}>
-                        <h2>Thanh toán: {addDotToNumber(Total)}.000VNĐ = {TotalUSD}USD </h2>
+                        <h2>Thanh toán: {addDotToNumber(Total ?? 0)}.000VNĐ = {TotalUSD}USD </h2>
                     </div>
                     :
                     ShowSuccess ?

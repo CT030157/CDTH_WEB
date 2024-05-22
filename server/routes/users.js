@@ -253,7 +253,7 @@ router.get('/getHistory', auth, (req, res) => {
 })
 
 router.get("/users_check", (req, res) => {
-    return res.status(200).send('users dmm');
+    return res.status(200).send('users server running in port 4444');
 });
 
 

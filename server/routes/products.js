@@ -215,7 +215,7 @@ router.get("/products_by_id", (req, res) => {
 
 
 router.get("/products_check", (req, res) => {
-    return res.status(200).send('products dmm');
+    return res.status(200).send('products server running in port 4445');
 });
 
 module.exports = router;
