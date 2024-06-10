@@ -19,7 +19,7 @@ function UserCardBlock(props) {
                     src={renderCartImage(product.images)} />
                 </td> 
                 <td>{product.quantity}</td>
-                <td>{addDotToNumber(product.price ?? 0)}.000VNĐ </td>
+                <td>{addDotToNumber(product.price ?? 0)}VNĐ </td>
                 <td><button 
                 onClick={()=> props.removeItem(product._id)}
                 >Loại bỏ </button> </td>

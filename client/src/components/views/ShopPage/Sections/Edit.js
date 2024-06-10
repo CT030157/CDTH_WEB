@@ -103,7 +103,7 @@ function Edit(props) {
                 />
                 <br />
                 <br />
-                <label>Giá tiền(.000 VNĐ)</label>
+                <label>Giá tiền(VNĐ)</label>
                 <Input
                     onChange={onPriceChange}
                     value={PriceValue}

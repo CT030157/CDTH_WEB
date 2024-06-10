@@ -108,7 +108,7 @@ function ShopPage(props){
             >
                 <Meta
                     title={product.title}
-                    description={`${addDotToNumber(product.price ?? 0)}.000VND`}
+                    description={`${addDotToNumber(product.price ?? 0)}VND`}
                 />
             </Card>
         </Col>

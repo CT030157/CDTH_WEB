@@ -31,7 +31,7 @@ function HistoryPage(props) {
                             <tr>
                                 <td>{item.id}</td>
                                 <td>{item.name}</td>
-                                <td>{addDotToNumber(item.price ?? 0)}.000VNĐ</td>
+                                <td>{addDotToNumber(item.price ?? 0)}VNĐ</td>
                                 <td>{item.quantity}</td>
                                 <td>{Date(item.dateOfPurchase)}</td>
                             </tr>

@@ -42,9 +42,9 @@ function SoldHistoryPage(props) {
         return(
             <tr key={product._id}>
                 <td>{product.title}</td> 
-                <td>{addDotToNumber(product.price ?? 0)}.000VNĐ </td>
+                <td>{addDotToNumber(product.price ?? 0)}VNĐ </td>
                 <td>{product.sold}</td>
-                <td>{product.sold*product.price}.000VNĐ</td>
+                <td>{product.sold*product.price}VNĐ</td>
             </tr>   
         )
     })
