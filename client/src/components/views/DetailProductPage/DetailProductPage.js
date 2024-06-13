@@ -18,8 +18,8 @@ function DetailProductPage(props) {
             })
     }, [])
 
-    const addToCartHandler = (productId) => {
-        dispatch(addToCart(productId))
+    const addToCartHandler = (productId, quantity, size) => {
+        dispatch(addToCart(productId, quantity, size))
     }
 
     return (

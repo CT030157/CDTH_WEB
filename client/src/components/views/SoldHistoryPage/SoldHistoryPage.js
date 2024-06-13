@@ -9,7 +9,7 @@ function SoldHistoryPage(props) {
 
 
     const getProducts = (variables) => {
-        Axios.get(`${PRODUCT_SERVER}/getWriter`, variables)
+        Axios.post(`${PRODUCT_SERVER}/getWriter`, variables)
             .then(response => {
                 if (response.data.success) {
                     if (variables.loadMore) {
@@ -44,7 +44,7 @@ function SoldHistoryPage(props) {
                 <td>{product.title}</td> 
                 <td>{addDotToNumber(product.price ?? 0)}VNĐ </td>
                 <td>{product.sold}</td>
-                <td>{product.sold*product.price}VNĐ</td>
+                <td>{addDotToNumber(product.sold*product.price)}VNĐ</td>
             </tr>   
         )
     })

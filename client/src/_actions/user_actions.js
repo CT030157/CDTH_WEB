@@ -53,8 +53,8 @@ export function logoutUser() {
 }
 
 
-export function addToCart(_id) {
-    const request = axios.get(`${USER_SERVER}/addToCart?productId=${_id}`)
+export function addToCart(_id, quantity, size) {
+    const request = axios.get(`${USER_SERVER}/addToCart?productId=${_id}&quantity=${quantity}&size=${size}`)
         .then(response => response.data);
 
     return {
@@ -70,15 +70,18 @@ export function addToCart(_id) {
 export function getCartItems(cartItems, userCart) {
     const request = axios.get(`${PRODUCT_SERVER}/products_by_id?id=${cartItems}&type=array`)
         .then(response => {
+            // console.log(cartItems)
             userCart.forEach(cartItem => {
                 response.data.forEach((productDetail, i) => {
-                    if (cartItem.id === productDetail._id) {
-                        response.data[i].quantity = cartItem.quantity;
+                    if (cartItem.product_id === productDetail._id) {
+                        // response.data[i].quantity = cartItem.quantity;
+                        cartItem.title = productDetail.title;
+                        cartItem.images = productDetail.images;
+                        cartItem.price = productDetail.price;
                     }
                 })
             })
-
-            return response.data;
+            return userCart;
         });
 
     return {

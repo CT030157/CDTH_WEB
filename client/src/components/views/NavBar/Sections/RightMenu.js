@@ -34,35 +34,46 @@ function RightMenu(props) {
     )
   } else {
     return (
-      <Menu mode={props.mode}>
+        user.userData && user.userData.isAdmin
+        ?
+        <Menu mode={props.mode}>
 
-        <Menu.Item key="history">
-          <a href="/history">
-            <HistoryOutlined style={{color:'#3e91f7', fontSize: '29px', marginTop: '9px'}} />
-          </a>
-        </Menu.Item>
-
-        <Menu.Item key="shop">
-          <a href="/shop">
-            <ShopOutlined style={{color:'#3e91f7', fontSize: '30px', marginTop: '9px'}} />
-          </a>
-        </Menu.Item>
-
-        <Menu.Item key="cart" style={{ paddingBottom: 3 }}>
-          <Badge count={user.userData && user.userData.cart.length}>
-            <a href="/user/cart">
-              <ShoppingCartOutlined style={{color:'#3e91f7', fontSize: '32px', marginTop: '7px'}} />
+          <Menu.Item key="logout">
+            <a onClick={logoutHandler}>
+              <LogoutOutlined style={{color:'#3e91f7', fontSize: '27px', marginTop: '10px'}} />
             </a>
-          </Badge>
-        </Menu.Item>
+          </Menu.Item>
+        </Menu>
+        :
+        <Menu mode={props.mode}>
+
+          <Menu.Item key="history">
+            <a href="/history">
+              <HistoryOutlined style={{color:'#3e91f7', fontSize: '29px', marginTop: '9px'}} />
+            </a>
+          </Menu.Item>
+
+          <Menu.Item key="shop">
+            <a href="/shop">
+              <ShopOutlined style={{color:'#3e91f7', fontSize: '30px', marginTop: '9px'}} />
+            </a>
+          </Menu.Item>
+
+          <Menu.Item key="cart" style={{ paddingBottom: 3 }}>
+            <Badge count={user.userData && user.userData.cart.length}>
+              <a href="/user/cart">
+                <ShoppingCartOutlined style={{color:'#3e91f7', fontSize: '32px', marginTop: '7px'}} />
+              </a>
+            </Badge>
+          </Menu.Item>
 
 
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>
-            <LogoutOutlined style={{color:'#3e91f7', fontSize: '27px', marginTop: '10px'}} />
-          </a>
-        </Menu.Item>
-      </Menu>
+          <Menu.Item key="logout">
+            <a onClick={logoutHandler}>
+              <LogoutOutlined style={{color:'#3e91f7', fontSize: '27px', marginTop: '10px'}} />
+            </a>
+          </Menu.Item>
+        </Menu>
     )
   }
 }

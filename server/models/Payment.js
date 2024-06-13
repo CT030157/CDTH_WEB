@@ -14,7 +14,16 @@ const paymentSchema = mongoose.Schema({
     product: {
         type: Array,
         default: []
-    }
+    },
+    phone: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    status: {
+        type: String
+    },
 
 
 }, { timestamps: true })

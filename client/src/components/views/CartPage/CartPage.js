@@ -6,16 +6,19 @@ import {
     onSuccessBuy
 } from '../../../_actions/user_actions';
 import UserCardBlock from './Sections/UserCardBlock';
-import { Result, Empty } from 'antd';
+import { Result, Empty, Form, Input, Button } from 'antd';
 import Axios from 'axios';
 import Paypal from '../../utils/Paypal';
-import { Button } from 'antd';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 function CartPage(props) {
     const dispatch = useDispatch();
     const [Total, setTotal] = useState(0)
     const [TotalUSD, setTotalUSD] = useState(0)
     const [ShowTotal, setShowTotal] = useState(false)
     const [ShowSuccess, setShowSuccess] = useState(false)
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
 
     useEffect(() => {
 
@@ -23,7 +26,7 @@ function CartPage(props) {
         if (props.user.userData && props.user.userData.cart) {
             if (props.user.userData.cart.length > 0) {
                 props.user.userData.cart.forEach(item => {
-                    cartItems.push(item.id)
+                    cartItems.push(item.product_id)
                 });
                 dispatch(getCartItems(cartItems, props.user.userData.cart))
                     .then((response) => {
@@ -65,7 +68,9 @@ function CartPage(props) {
     const transactionSuccess = (data) => {
         dispatch(onSuccessBuy({
             cartDetail: props.user.cartDetail,
-            paymentData: data
+            paymentData: data,
+            phone: phone,
+            address: address,
         }))
             .then(response => {
                 if (response.payload.success) {
@@ -101,7 +106,64 @@ function CartPage(props) {
 
                 {ShowTotal ?
                     <div style={{ marginTop: '3rem' }}>
-                        <h2>Thanh toán: {addDotToNumber(Total ?? 0)}VNĐ = {TotalUSD}USD </h2>
+                        <Formik
+                            initialValues={{
+                                phone: '',
+                                address: '',
+                            }}
+                            validationSchema={Yup.object().shape({
+                                phone: Yup.string()
+                                .required('Yêu cầu nhập số điện thoại'),
+                                address: Yup.string()
+                                .required('Yêu cầu nhập dịa chỉ'),
+                            })}
+                            >
+                            {props => {
+                                const {
+                                values,
+                                touched,
+                                errors,
+                                handleChange,
+                                handleBlur,
+                                } = props;
+                                return (
+                                <div>
+                                    <Form style={{ minWidth: '100px' }} >
+
+                                    <Form.Item required label="Số điện thoại">
+                                        <Input
+                                        id="phone"
+                                        placeholder="Nhập số điện thoại"
+                                        type="text"
+                                        value={values.phone}
+                                        onChange={(e) =>{handleChange(e); setPhone(e.target.value)}}
+                                        onBlur={handleBlur}
+                                        />
+                                        {errors.phone && touched.phone && (
+                                        <div className="input-feedback">{errors.phone}</div>
+                                        )}
+                                    </Form.Item>
+
+                                    <Form.Item required label="Địa chỉ">
+                                        <Input
+                                        id="address"
+                                        placeholder="Nhập địa chỉ"
+                                        type="text"
+                                        value={values.address}
+                                        onChange={(e) =>{handleChange(e); setAddress(e.target.value)}}
+                                        onBlur={handleBlur}
+                                        />
+                                        {errors.address && touched.address && (
+                                        <div className="input-feedback">{errors.address}</div>
+                                        )}
+                                    </Form.Item>
+                                    </Form>
+                                </div>
+                                );
+                            }}
+                        </Formik>
+                        {/* <h2>Thanh toán: {addDotToNumber(Total ?? 0)}VNĐ = {TotalUSD}USD </h2> */}
+                        <h2>Thanh toán: {addDotToNumber(Total ?? 0)}VNĐ</h2>
                     </div>
                     :
                     ShowSuccess ?
@@ -124,7 +186,7 @@ function CartPage(props) {
 
 
 
-            {ShowTotal &&
+            {ShowTotal ?
 
                 // <Paypal
                 //     toPay={TotalUSD}
@@ -132,10 +194,20 @@ function CartPage(props) {
                 //     transactionError={transactionError}
                 //     transactionCanceled={transactionCanceled}
                 // />
-                <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} onClick={() => transactionSuccess('ok')}>
+                phone.trim() != '' && address.trim() != ''
+                ?
+                <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} 
+                    onClick={() => transactionSuccess('ok')}
+                    >
                     Thanh toán
                 </Button>
-
+                :
+                <Button type="ghost" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} 
+                    >
+                    Thanh toán
+                </Button>
+                :
+                <div />
             }
 
 

@@ -3,18 +3,20 @@ import { Typography, Button, Form, Input } from 'antd';
 import FileUpload from './FileUpload'
 import Axios from 'axios';
 import { PRODUCT_SERVER } from '../../../Config';
+import { category } from '../../../utils/Datas';
+import { Collapse, Radio } from 'antd';
+
+const { Panel } = Collapse;
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const Categories = [
-    { key: 1, value: "Thời trang" },
-    { key: 2, value: "Phụ kiện" },
-    { key: 3, value: "Điện thoại" },
-    { key: 4, value: "Máy tính & Laptop" },
-    { key: 5, value: "Linh kiện điện tử" },
-    { key: 6, value: "Thiết bị gia dụng" },
-    { key: 7, value: "Sách báo" }
+const categories = [
+    { key: 1, value: "Áo Nam", gender: 1, group: 1 },
+    { key: 2, value: "Quần Nam", gender: 1, group: 2 },
+    { key: 3, value: "Áo Nữ", gender: 2, group: 1 },
+    { key: 4, value: "Quần Nữ", gender: 2, group: 2 },
+    { key: 5, value: "Phụ Kiện", gender: 3, group: 1 },
 ]
 
 function Edit(props) {
@@ -40,7 +42,7 @@ function Edit(props) {
     }
 
     const onCategoriesSelectChange = (event) => {
-        setCategoryValue(event.currentTarget.value)
+        setCategoryValue(event.target.value)
     }
 
     const updateImages = (newImages) => {
@@ -76,6 +78,19 @@ function Edit(props) {
             })
 
     }
+
+    const renderOptionLists = (gender, group) => category.filter(item => item.gender == gender && item.group == group).map((item, index) => (
+        <Radio key={item._id} value={`${item._id}`}>{item.name}</Radio>
+    ))
+
+    const renderCategories = () => categories.map(({key, value, gender, group}) =>(
+            <Collapse defaultActiveKey={['0']} key={key}>
+                <Panel header={value} key={key}  >
+                    {renderOptionLists(gender, group)}
+                </Panel>
+            </Collapse>
+    ))
+
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -110,11 +125,16 @@ function Edit(props) {
                     type="number"
                 />
                 <br /><br />
-                <select onChange={onCategoriesSelectChange} value={CategoryValue}>
-                    {Categories.map(item => (
-                        <option key={item.key} value={item.key}>{item.value} </option>
-                    ))}
-                </select>
+                <label>Phân loại</label>
+                <Collapse defaultActiveKey={['0']}>
+                    <Panel header={category.find(item => item._id == CategoryValue).name} key="1">
+                        <Radio.Group onChange={onCategoriesSelectChange} value={CategoryValue}>
+
+                            {renderCategories()}
+
+                        </Radio.Group>
+                    </Panel>
+                </Collapse>
                 <br />
                 <br />
 

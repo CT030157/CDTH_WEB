@@ -81,7 +81,7 @@ router.get('/addToCart', auth, (req, res) => {
         let duplicate = false;
 
         userInfo.cart.forEach((item) => {
-            if (item.id == req.query.productId) {
+            if (item.id == req.query.productId && item.size == req.query.size) {
                 duplicate = true;
             }
         })
@@ -89,8 +89,8 @@ router.get('/addToCart', auth, (req, res) => {
 
         if (duplicate) {
             User.findOneAndUpdate(
-                { _id: req.user._id, "cart.id": req.query.productId },
-                { $inc: { "cart.$.quantity": 1 } },
+                { _id: req.user._id, "cart.id": req.query.productId + '_' + req.query.size, "cart.$.product_id": req.query.productId },
+                { $inc: { "cart.$.quantity": req.query.quantity } },
                 { new: true },
                 (err, userInfo) => {
                     if (err) return res.json({ success: false, err });
@@ -103,8 +103,10 @@ router.get('/addToCart', auth, (req, res) => {
                 {
                     $push: {
                         cart: {
-                            id: req.query.productId,
-                            quantity: 1,
+                            id: req.query.productId + '_' + req.query.size,
+                            product_id: req.query.productId,
+                            quantity: req.query.quantity,
+                            size: req.query.size,
                             date: Date.now()
                         }
                     }
@@ -132,7 +134,7 @@ router.get('/removeFromCart', auth, (req, res) => {
         (err, userInfo) => {
             let cart = userInfo.cart;
             let array = cart.map(item => {
-                return item.id
+                return item.product_id
             })
 
             Product.find({ '_id': { $in: array } })
@@ -154,7 +156,7 @@ router.get('/userCartInfo', auth, (req, res) => {
         (err, userInfo) => {
             let cart = userInfo.cart;
             let array = cart.map(item => {
-                return item.id
+                return item.product_id
             })
 
 
@@ -180,10 +182,12 @@ router.post('/successBuy', auth, (req, res) => {
         history.push({
             dateOfPurchase: Date.now(),
             name: item.title,
-            id: item._id,
+            id: item.id,
             price: item.price,
             quantity: item.quantity,
-            paymentId: req.body.paymentData.paymentID
+            product_id: item.product_id,
+            size: item.size,
+            paymentId: item.id + '_' + Date.now()
         })
     })
 
@@ -195,7 +199,9 @@ router.post('/successBuy', auth, (req, res) => {
     }
 
     transactionData.data = req.body.paymentData;
-    transactionData.product = history
+    transactionData.product = history;
+    transactionData.phone = req.body.phone;
+    transactionData.address = req.body.address;
 
 
     User.findOneAndUpdate(
@@ -209,10 +215,9 @@ router.post('/successBuy', auth, (req, res) => {
             const payment = new Payment(transactionData)
             payment.save((err, doc) => {
                 if (err) return res.json({ success: false, err });
-
                 let products = [];
                 doc.product.forEach(item => {
-                    products.push({ id: item.id, quantity: item.quantity })
+                    products.push({ id: item.product_id, quantity: item.quantity })
                 })
 
                 async.eachSeries(products, (item, callback) => {
@@ -250,6 +255,54 @@ router.get('/getHistory', auth, (req, res) => {
             return res.status(200).json({ success: true, history })
         }
     )
+})
+
+
+router.post('/getPending', auth, (req, res) => {
+    Payment.find(
+        { "product": { $elemMatch: { "product_id": { $in: req.body.productIds } } } },
+        (err, payment) => {
+            if (err) return res.status(400).send(err)
+            return res.status(200).json({ success: true, payment })
+        }
+    )
+})
+
+router.post('/changePending', auth, async (req, res) => {
+    let userId = req.body.userId;
+    let paymentId = req.body.paymentId;
+    let historyIdsUpdate = req.body.historyIdsUpdate;
+    let newStatus = req.body.newStatus;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    user.history.forEach(item => {
+      if (historyIdsUpdate.includes(item.id)) {
+        item.status = newStatus;
+      }
+    });
+
+    user.markModified('history');
+
+    await user.save();
+
+    const payment = await Payment.findById(paymentId);
+    if (!payment) {
+      return res.status(404).json({ message: 'Payment not found' });
+    }
+    payment.product.forEach(item => {
+      if (historyIdsUpdate.includes(item.id)) {
+        item.status = newStatus;
+      }
+    });
+
+    payment.markModified('product');
+
+    await payment.save();
+
+    return res.status(200).json({ message: 'ok' });
 })
 
 router.get("/users_check", (req, res) => {

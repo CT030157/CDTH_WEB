@@ -5,7 +5,7 @@ import  Icon  from '@ant-design/icons';
 import ImageSlider from '../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
-import { category , price } from './Sections/Datas';
+import { category , price } from '../../utils/Datas';
 import SearchFeature from './Sections/SearchFeature';
 import { PRODUCT_SERVER } from '../../Config';
 

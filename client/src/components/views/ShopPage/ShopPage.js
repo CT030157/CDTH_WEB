@@ -122,11 +122,14 @@ function ShopPage(props){
             </div>
 
             <div style={{ paddingBottom : '20px' }}>
-                <Menu mode="horizontal" style={{width: '100%'}} >
-                    <Menu.Item key="upload" style={{width: '50%' , color:'#3e91f7', fontSize: '25px' , textAlign : 'center' }} >
+                <Menu mode="horizontal" style={{width: '100%', alignItems: 'center', justifyContent: 'center'}} >
+                    <Menu.Item key="upload" style={{width: '30%' , color:'#3e91f7', fontSize: '25px' , textAlign : 'center' }} >
                         <a href="/product/upload">Đăng sản phẩm</a>
                     </Menu.Item>
-                    <Menu.Item key="uh" style={{width: '50%' , color:'#3e91f7', fontSize: '25px' , textAlign: 'center'}}>
+                    <Menu.Item key="pending" style={{width: '30%' , color:'#3e91f7', fontSize: '25px' , textAlign: 'center'}}>
+                        <a href="/pending">Đơn hàng</a>
+                    </Menu.Item> 
+                    <Menu.Item key="sold" style={{width: '30%' , color:'#3e91f7', fontSize: '25px' , textAlign: 'center'}}>
                         <a href="/sold">Lịch sử bán</a>
                     </Menu.Item> 
                 </Menu>
