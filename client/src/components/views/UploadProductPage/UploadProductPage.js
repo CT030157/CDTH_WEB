@@ -53,7 +53,7 @@ function UploadProductPage(props) {
 
         if (!TitleValue || !DescriptionValue || !PriceValue ||
             !CategoryValue || !Images) {
-            return alert('fill all the fields first!')
+            return alert('Vui lòng điền các ô')
         }
 
         const variables = {

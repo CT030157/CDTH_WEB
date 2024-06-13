@@ -49,7 +49,10 @@ router.post("/login", (req, res) => {
 
         user.comparePassword(req.body.password, (err, isMatch) => {
             if (!isMatch)
-                return res.json({ loginSuccess: false, message: "Wrong password" });
+                return res.json({ loginSuccess: false, message: "Sai mật khẩu" });
+            if(user.status != 1){
+                return res.json({ loginSuccess: false, message: "Tài khoản bị khóa" });
+            }
 
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);
@@ -303,6 +306,78 @@ router.post('/changePending', auth, async (req, res) => {
     await payment.save();
 
     return res.status(200).json({ message: 'ok' });
+})
+
+// admin
+
+router.get('/admin/users', auth, async (req, res) => {
+    User.find({ "_id": { $nin : req.user._id} })
+            .exec((err, users) => {
+                if (err) return res.status(400).json({ success: false, err })
+                res.status(200).json({ success: true, users })
+            })
+})
+
+router.post('/admin/users/changePassword', auth, async (req, res) => {
+    const user = await User.findById(req.body.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.password = req.body.newPassword;
+
+    user.markModified('password');
+    await user.save();
+    res.status(200).json({ success: true })
+})
+
+router.post('/admin/users/block', auth, async (req, res) => {
+    const user = await User.findById(req.body.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    user.status = req.body.status;
+
+    user.markModified('status');
+    await user.save();
+    res.status(200).json({ success: true })
+})
+
+router.post('/admin/users/delete', auth, async (req, res) => {
+    User.findOneAndDelete({ _id: req.body.id },)
+        .exec((error, doc)=>{
+            if(error) return res.status(400).json({ success: false, error});
+            res.status(200).json({ success: true, doc })
+        })
+})
+
+router.get('/admin/products', auth, async (req, res) => {
+    Product.find({})
+    .limit(20)
+    .exec(async (err, products) => {
+        if (err) return res.status(400).json({ success: false, err });
+        const productsWithWriter = await Promise.all(
+            products.map(async (product) => {
+              let user = await User.findById(product.writer);
+              product = product.toObject();
+              product.writer = user;
+              return product;
+            })
+          );
+      
+          res.status(200).json({ success: true, products: productsWithWriter });
+    });
+})
+
+router.get('/admin/payments', auth, async (req, res) => {
+    Payment.find({})
+    .limit(20)
+    .exec(async (err, payments) => {
+        if (err) return res.status(400).json({ success: false, err });
+      
+        res.status(200).json({ success: true, payments });
+    });
 })
 
 router.get("/users_check", (req, res) => {

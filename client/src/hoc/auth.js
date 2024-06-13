@@ -16,7 +16,7 @@ export default function auths(ComposedClass, reload, adminRoute = null) {
                         props.history.push('/login')
                     }
                 } else {
-                    if (response.payload.isAdmin) {
+                    if (response.payload.isAdmin && !adminRoute) {
                         props.history.push('/dashboard')
                     }
                     if (adminRoute && !response.payload.isAdmin) {

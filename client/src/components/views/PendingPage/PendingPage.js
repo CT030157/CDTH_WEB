@@ -17,9 +17,9 @@ function PendingPage(props) {
                     let products = response.data.products;
                     let productIds = products.map(item => item._id);
                     setProductIds(productIds);
-                    Axios.post(`${USER_SERVER}/getPending`, {productIds: productIds}).then(response => {console.log(response.data.payment); setPayments(response.data.payment)});
+                    Axios.post(`${USER_SERVER}/getPending`, {productIds: productIds}).then(response => {setPayments(response.data.payment)});
                 } else {
-                    alert('Failed to fectch product datas')
+                    alert('Lỗi lấy dữ liệu sản phẩm')
                 }
             })
     }
@@ -35,9 +35,9 @@ function PendingPage(props) {
         Axios.post(`${USER_SERVER}/changePending`, variables)
             .then(response => {
                 if (response.status == 200) {
-                    Axios.post(`${USER_SERVER}/getPending`, ProductIds).then(response => {console.log(response.data.payment); setPayments(response.data.payment)});
+                    Axios.post(`${USER_SERVER}/getPending`, ProductIds).then(response => {setPayments(response.data.payment)});
                 } else {
-                    alert('Failed to fectch product datas')
+                    alert('Lỗi lấy dữ liệu sản phẩm')
                 }
             })
     }

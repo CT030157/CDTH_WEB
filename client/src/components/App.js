@@ -14,6 +14,9 @@ import HistoryPage from './views/HistoryPage/HistoryPage';
 import SoldHistoryPage from './views/SoldHistoryPage/SoldHistoryPage';
 import PendingPage from './views/PendingPage/PendingPage.js';
 import AdminDashboardPage from './views/AdminPage/AdminDashboardPage.js';
+import AdminUserPage from './views/AdminPage/AdminUserPage.js';
+import AdminProductPage from './views/AdminPage/AdminProductPage.js';
+import AdminPaymentPage from './views/AdminPage/AdminPaymentPage.js';
 
 function App() {
   return (
@@ -32,6 +35,10 @@ function App() {
           <Route exact path="/history" component={Auth(HistoryPage, true)} />
           <Route exact path="/pending" component={Auth(PendingPage, true)} />
           <Route exact path="/dashboard" component={Auth(AdminDashboardPage, true, true)} />
+          <Route exact path="/admin/users" component={Auth(AdminUserPage, true, true)} />
+          <Route exact path="/admin/products" component={Auth(AdminProductPage, true, true)} />
+          <Route exact path="/admin/payments" component={Auth(AdminPaymentPage, true, true)} />
+          <Route exact path="/admin/product/:productId" component={Auth(DetailProductPage, null, true)} />
         </Switch>
       </div>
       <Footer />

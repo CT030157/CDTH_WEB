@@ -37,7 +37,7 @@ function ShopPage(props){
                     }
                     setPostSize(response.data.postSize)
                 } else {
-                    alert('Failed to fectch product datas')
+                    alert('Lỗi lấy dữ liệu sản phẩm')
                 }
             })
     }

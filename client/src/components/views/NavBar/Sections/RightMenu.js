@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Menu, Badge } from 'antd';
-import {ShoppingCartOutlined, LogoutOutlined , ShopOutlined , HistoryOutlined} from '@ant-design/icons';
+import {ShoppingCartOutlined, LogoutOutlined , ShopOutlined , HistoryOutlined, UserOutlined, ShoppingOutlined, UnorderedListOutlined} from '@ant-design/icons';
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
@@ -36,7 +36,25 @@ function RightMenu(props) {
     return (
         user.userData && user.userData.isAdmin
         ?
-        <Menu mode={props.mode}>
+        <Menu mode={props.mode} style={{minWidth: '400px', justifyContent: 'flex-end'}}>
+
+          <Menu.Item key="admin_user">
+            <a href="/admin/users">
+              <UserOutlined style={{color:'#3e91f7', fontSize: '30px', marginTop: '9px'}} />
+            </a>
+          </Menu.Item>
+
+          <Menu.Item key="admin_product">
+            <a href="/admin/products">
+              <ShoppingOutlined style={{color:'#3e91f7', fontSize: '30px', marginTop: '9px'}} />
+            </a>
+          </Menu.Item>
+
+          <Menu.Item key="admin_payment">
+            <a href="/admin/payments">
+              <UnorderedListOutlined style={{color:'#3e91f7', fontSize: '30px', marginTop: '9px'}} />
+            </a>
+          </Menu.Item>
 
           <Menu.Item key="logout">
             <a onClick={logoutHandler}>
@@ -45,7 +63,7 @@ function RightMenu(props) {
           </Menu.Item>
         </Menu>
         :
-        <Menu mode={props.mode}>
+        <Menu mode={props.mode} style={{minWidth: '400px', justifyContent: 'flex-end'}}>
 
           <Menu.Item key="history">
             <a href="/history">
