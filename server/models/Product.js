@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.set('useFindAndModify', false);
 const config = require('../config/dev');
+const { text } = require('body-parser');
 const dbProduct = mongoose.createConnection(config.mongoProductURI)
 
 const productSchema = mongoose.Schema({
@@ -10,7 +11,8 @@ const productSchema = mongoose.Schema({
         ref: 'User'
     },
     title: {
-        type: String
+        type: String,
+        text: true,
     },
     description: {
         type: String
@@ -46,7 +48,7 @@ productSchema.index({
 }, {
     weights: {
         writer:10,
-        name: 5,
+        title: 5,
         description: 1,
     }
 })

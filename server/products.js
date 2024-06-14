@@ -1,7 +1,5 @@
 const express = require("express");
-const appUser = express();
 const appProduct = express();
-const path = require("path");
 const cors = require('cors')
 
 const bodyParser = require("body-parser");
