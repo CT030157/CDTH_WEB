@@ -190,7 +190,8 @@ router.post('/successBuy', auth, (req, res) => {
             quantity: item.quantity,
             product_id: item.product_id,
             size: item.size,
-            paymentId: item.id + '_' + Date.now()
+            paymentId: item.id + '_' + Date.now(),
+            status: 'Chờ duyệt'
         })
     })
 

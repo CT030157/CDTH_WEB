@@ -39,7 +39,7 @@ function ProductInfo(props) {
         <div>
             <Descriptions title="Thông tin sản phẩm">
                 <Descriptions.Item label="Giá tiền"> {addDotToNumber(Product.price ?? 0)}VNĐ</Descriptions.Item>
-                <Descriptions.Item label="Đã mua">{Product.sold}</Descriptions.Item>
+                <Descriptions.Item label="Đã bán">{Product.sold}</Descriptions.Item>
                 <Descriptions.Item label="Đã xem"> {Product.views}</Descriptions.Item>
                 <Descriptions.Item label="Mô tả"> {Product.description}</Descriptions.Item>
             </Descriptions>
