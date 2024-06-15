@@ -83,8 +83,10 @@ router.get('/addToCart', auth, (req, res) => {
     User.findOne({ _id: req.user._id }, (err, userInfo) => {
         let duplicate = false;
 
+        let itemCartId = req.query.productId + '_' +  req.query.size;
+
         userInfo.cart.forEach((item) => {
-            if (item.id == req.query.productId && item.size == req.query.size) {
+            if (item.id == itemCartId && item.size == req.query.size) {
                 duplicate = true;
             }
         })
@@ -92,8 +94,8 @@ router.get('/addToCart', auth, (req, res) => {
 
         if (duplicate) {
             User.findOneAndUpdate(
-                { _id: req.user._id, "cart.id": req.query.productId + '_' + req.query.size, "cart.$.product_id": req.query.productId },
-                { $inc: { "cart.$.quantity": req.query.quantity } },
+                { _id: req.user._id, "cart.id": itemCartId},
+                { $inc: { "cart.$.quantity": parseInt(req.query.quantity, 10) } },
                 { new: true },
                 (err, userInfo) => {
                     if (err) return res.json({ success: false, err });
@@ -108,7 +110,7 @@ router.get('/addToCart', auth, (req, res) => {
                         cart: {
                             id: req.query.productId + '_' + req.query.size,
                             product_id: req.query.productId,
-                            quantity: req.query.quantity,
+                            quantity: parseInt(req.query.quantity, 10),
                             size: req.query.size,
                             date: Date.now()
                         }

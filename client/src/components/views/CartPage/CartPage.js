@@ -169,7 +169,7 @@ function CartPage(props) {
                     ShowSuccess ?
                         <Result
                             status="success"
-                            title="Successfully Purchased Items"
+                            title="Mua hàng thành công"
                         /> :
                         <div style={{
                             width: '100%', display: 'flex', flexDirection: 'column',

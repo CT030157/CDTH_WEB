@@ -91,7 +91,7 @@ function ShopPage(props){
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
-        return <Col lg={6} md={8} xs={24}>
+        return <Col lg={4} md={10} xs={24}>
             <Card
                 hoverable={true}
                 cover={<a href={`/product/${product._id}`}> <ImageSlider images={product.images} /></a>}
