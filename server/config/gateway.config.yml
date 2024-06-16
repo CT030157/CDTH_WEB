@@ -1,0 +1,37 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  hostname: localhost
+apiEndpoints:
+  users:
+    host: localhost
+    paths: '/api/users'
+  products:
+    host: localhost
+    paths: '/api/products'
+serviceEndpoints:
+  user_service:
+    url: 'http://localhost:4444'
+  product_service:
+    url: 'http://localhost:4445'
+policies:
+  - proxy
+pipelines:
+  user_pipeline:
+    apiEndpoints:
+      - users
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: user_service
+              changeOrigin: true
+  product_pipeline:
+    apiEndpoints:
+      - products
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: product_service
+              changeOrigin: true
+
