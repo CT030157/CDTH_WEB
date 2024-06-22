@@ -119,7 +119,7 @@ const category = [
         "_id": 14,
         "gender": 2,
         "group": 1,
-        "name": "Áo Thun Nữ"
+        "name": "Áo Polo Nữ"
     },
     {
         "_id": 15,

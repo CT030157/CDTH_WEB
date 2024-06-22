@@ -90,7 +90,7 @@ router.post("/delete", auth, (req, res) => {
 
 router.post("/getProducts", (req, res) => {
 
-    let order = req.body.order ? req.body.order : "desc";
+    let order = req.body.order ? req.body.order : "asc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id"; 
     let limit = req.body.limit ? parseInt(req.body.limit) : 100;
     let skip = parseInt(req.body.skip);
