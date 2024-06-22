@@ -125,9 +125,9 @@ function LoginPage(props) {
 
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Lưu mật khẩu</Checkbox>
-                <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
+                {/* <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
                   Quên mật khẩu
-                  </a>
+                  </a> */}
                 <div>
                   <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
                     Đăng nhập
