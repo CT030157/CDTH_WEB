@@ -146,7 +146,7 @@ router.get('/removeFromCart', auth, (req, res) => {
                 .populate('writer')
                 .exec((err, cartDetail) => {
                     return res.status(200).json({
-                        cartDetail,
+                        cartDetail: cartDetail ?? [] ,
                         cart
                     })
                 })
